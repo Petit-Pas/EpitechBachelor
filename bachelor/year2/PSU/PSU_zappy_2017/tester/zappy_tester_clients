@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+from subprocess import run
+import argparse
+
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('ip', type=str, help='IP Address of the server')
+    parser.add_argument('port', type=str, help='Port of the server')
+    parser.add_argument('--charge', help='Launch the charge test (launch 500 client that run forward till death)',
+                        action='store_true')
+    parser.add_argument('--allcmd', help='Launch the all the command possible test (launch 50 client that '
+                                         'execute the command till death)',
+                        action='store_true')
+    parser.add_argument('--slow', help='Launch the broadcast and fork command in the allcmd will slow down a lot',
+                        action='store_true')
+    args = parser.parse_args()
+    return args
+
+
+def main():
+    args = get_args()
+    FNULL = open(os.devnull, 'w')
+    if args.charge:
+        print("###\tCHARGE\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '500', '--forward', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+    if args.allcmd:
+        print("###\tCONNECTION\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tFORWARD\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--forward', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tRIGHT\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--right', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tLEFT\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--left', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tLOOK\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--look', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tINVENTORY\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--inventory', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        if args.slow:
+            print("###\tBROADCAST\t###")
+            run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--broadcast', '100'],
+                stdout=FNULL, universal_newlines=True, bufsize=1)
+            print("###\tBROADCAST SMALL\t###")
+            run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--sbroadcast', '100'],
+                stdout=FNULL, universal_newlines=True, bufsize=1)
+            print("###\tBROADCAST LONG\t###")
+            run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--lbroadcast', '100'],
+                stdout=FNULL, universal_newlines=True, bufsize=1)
+            print("###\tBROADCAST TOO LONG\t###")
+            run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--tlbroadcast', '100'],
+                stdout=FNULL, universal_newlines=True, bufsize=1)
+            print("###\tFORK\t###")
+            run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--fork', '100'],
+                stdout=FNULL, universal_newlines=True, bufsize=1)
+
+        print("###\tCONNECT_NBR\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--connect_nbr', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tEJECT\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--eject', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tTAKE\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--take', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tSET\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--set', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("###\tINCANTATION\t###")
+        run(['python3', 'zappy_tester_client', args.ip, args.port, 'TOTO', '50', '--incantation', '100'],
+            stdout=FNULL, universal_newlines=True, bufsize=1)
+
+
+if __name__ == '__main__':
+    main()

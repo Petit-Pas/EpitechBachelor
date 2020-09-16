@@ -1,0 +1,9 @@
+*.o
+*~
+#*#
+.idea
+*.out
+zappy_server
+spectate
+cmake-build-debug/
+*html

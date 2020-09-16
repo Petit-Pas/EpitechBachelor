@@ -1,0 +1,128 @@
+check_end.c:  if (map->map[(int)player->pos.y][(int)player->pos.x] == 3)
+fill_player.c:  column = map->map[0][0];
+fill_player.c:  while (y < map->row)
+fill_player.c:      if (map->map[y][0] != column)
+fill_player.c:      while (x < map->map[y][0])
+fill_player.c:	  if (map->map[y][x] != 0 && map->map[y][x] != 1
+fill_player.c:	      && map->map[y][x] != 2 && map->map[y][x] != 3)
+fill_player.c:	  if (map->map[y][x] == 3)
+fill_player.c:	  if (map->map[y][x++] == 2)
+fill_player.c:  while (y < map->row)
+fill_player.c:      while (x < map->map[y][0])
+fill_player.c:	  if (map->map[y][x] == 2)
+fill_player.c:  while (y != map->row - 2)
+fill_player.c:      if (map->map[y][1] != 1 || map->map[y][map->map[y][0]] != 1)
+fill_player.c:  while (x != map->map[0][0] - 1)
+fill_player.c:      if (map->map[0][x] != 1)
+fill_player.c:  while (x != map->map[map->row - 1][1])
+fill_player.c:     if (map->map[map->row - 1][x] != 1)
+fill_player.c:  map->solution = NULL;
+fill_player.c:  map->path_found = NULL;
+fill_player.c:  map->solution = prepare_solution(map);
+fill_player.c:  map->path_found = map_cpy(map, 0, 0);
+fill_player.c:  if (map->solution == NULL || map->path_found == NULL)
+free.c:  if (map->path_found != NULL)
+free.c:      while (i != map->row)
+free.c:	  free(map->path_found[i]);
+free.c:      free(map->path_found);
+free.c:  if (map->solution != NULL)
+free.c:      while (i != map->row)
+free.c:	  free(map->solution[i]);
+free.c:      free(map->solution);
+free.c:  while (y != map->row)
+free.c:      free(map->map[y]);
+free.c:  free(map->map);
+map_cpy.c:  new_map = malloc(sizeof(int *) * map->row);
+map_cpy.c:  while (y < map->row)
+map_cpy.c:      if (!(new_map[y] = malloc(sizeof(int) * (map->map[y][0] + 1))))
+map_cpy.c:      while (x <= map->map[y][0])
+map_cpy.c:	  if (map->map[y][x] == 1)
+map_cpy.c:	  else if (map->map[y][x] == 2)
+map_cpy.c:          else if (map->map[y][x] == 3)
+move_forward.c:  if ((int)(pos.x + factor_x) <= map->map[0][0] && (int)(pos.x + factor_x) >= 1
+move_forward.c:      && (int)(pos.y + factor_y) < map->row && (int)(pos.y + factor_y) >= 0)
+open.c:  while (++i != amount && map->row < row)
+open.c:      tab[map->row] = malloc(sizeof(int) *
+open.c:			     (get_length(buffer, map->row, amount) + 1));
+open.c:      if (tab[map->row] == NULL)
+open.c:      tab[map->row][0] = get_length(buffer, map->row, amount);
+open.c:	tab[map->row][j++] = buffer[i++] - 48;
+open.c:      map->row++;
+open.c:  map->row = 0;
+open.c:  map->map = make_tab(av, map, - 1, 0);
+open.c:  if (map->map == NULL)
+print_image.c:  mapSize.x = map->map[0][0];
+print_image.c:  mapSize.y = map->row;
+print_solution.c:  value = map->solution[pos.y][pos.x];
+print_solution.c:  if (pos.x > 1 && map->solution[pos.y][pos.x - 1] == value - 1)
+print_solution.c:  else if (pos.x < map->solution[pos.y][0] &&
+print_solution.c:	   map->solution[pos.y][pos.x + 1] == value - 1)
+print_solution.c:  else if (pos.y > 0 && map->solution[pos.y - 1][pos.x] == value - 1)
+print_solution.c:  else if (pos.y < map->row && map->solution[pos.y + 1][pos.x] == value - 1)
+print_solution.c:  while (++y < map->row)
+print_solution.c:      while (x <= map->map[y][0])
+print_solution.c:	  if (map->path_found[y][x] == 4)
+print_solution.c:	    map->path_found[y][x] = - 1;
+print_solution.c:  while (map->map[temp_pos.y][temp_pos.x] != 3)
+print_solution.c:      map->path_found[temp_pos.y][temp_pos.x] = 4;
+print_solution.c:  else if (map->path_found[pos.y / size][pos.x / size] == 0)
+print_solution.c:  else if (map->path_found[pos.y / size][pos.x / size] == 4)
+print_solution.c:  else if (map->path_found[pos.y / size][pos.x / size] == - 1)
+print_solution.c:  pos.x = (map->map[0][0]) * size;
+print_solution.c:      pos.y = (map->row - 1) * size;
+raycast.c:  if (map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x + 0.05)] != 1 &&
+raycast.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x + 0.05)] != 1 &&
+raycast.c:      map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x - 0.05)] != 1 &&
+raycast.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x - 0.05)] != 1 &&
+raycast.c:      map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x + 0.05)] != 4 &&
+raycast.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x + 0.05)] != 4 &&
+raycast.c:      map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x - 0.05)] != 4 &&
+raycast.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x - 0.05)] != 4)
+raycast.c:  if (map->map[(int)pos.y][(int)pos.x] == 1)
+raycast.c:    map->map[(int)pos.y][(int)pos.x] = 4;
+raycast.c:**(int)pos.x < mapSize.x && map->map[(int)pos.y][(int)pos.x] != 1
+raycast.c:**&& map->map[(int)pos.y][(int)pos.x] != 4)
+raycast_dichotomic.c:	 (int)pos.x < mapSize.x && map->map[(int)pos.y][(int)pos.x] != 1
+raycast_dichotomic.c:	 && map->map[(int)pos.y][(int)pos.x] != 4)
+raycast_dichotomic.c:	 (int)pos.x < mapSize.x && map->map[(int)pos.y][(int)pos.x] != 1
+raycast_dichotomic.c:	 && map->map[(int)pos.y][(int)pos.x] != 4)
+raycast_dichotomic.c:  if (map->map[(int)pos.y][(int)pos.x] == 1)
+raycast_dichotomic.c:    map->map[(int)pos.y][(int)pos.x] = 4;
+show_map.c:  ratio_x = (buffer->width / map->map[0][0]) - 1;
+show_map.c:  ratio_y = (buffer->height / map->row - 1) - 1;
+show_map.c:  else if (map->map[pos.y / size][pos.x / size] == 1)
+show_map.c:  else if (map->map[pos.y / size][pos.x / size] == 3)
+show_map.c:  else if (map->map[pos.y / size][pos.x / size] == 4)
+show_map.c:  pos.x = (map->map[0][0]) * size;
+show_map.c:      pos.y = (map->row - 1) * size;
+sliding_walls.c:  if (map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x + 0.05)] != 1 &&
+sliding_walls.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x + 0.05)] != 1 &&
+sliding_walls.c:      map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x - 0.05)] != 1 &&
+sliding_walls.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x - 0.05)] != 1 &&
+sliding_walls.c:      map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x + 0.05)] != 4 &&
+sliding_walls.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x + 0.05)] != 4 &&
+sliding_walls.c:      map->map[(int)(new_pos_y + 0.05)][(int)(new_pos_x - 0.05)] != 4 &&
+sliding_walls.c:      map->map[(int)(new_pos_y - 0.05)][(int)(new_pos_x - 0.05)] != 4)
+solution.c:  if (map->solution[y][x] >= 0)
+solution.c:      if (y > 0 && map->solution[y - 1][x] == -1
+solution.c:	  || map->solution[y - 1][x] > map->solution[y][x] + 1)
+solution.c:	  map->solution[y - 1][x] = map->solution[y][x] + 1;
+solution.c:      if (y < map->row && map->solution[y + 1][x] == -1
+solution.c:	  || map->solution[y + 1][x] > map->solution[y][x] + 1)
+solution.c:	  map->solution[y + 1][x] = map->solution[y][x] + 1;
+solution.c:  if (map->solution[y][x] >= 0)
+solution.c:      if (x > 1 && map->solution[y][x - 1] == - 1
+solution.c:	  || map->solution[y][x - 1] > map->solution[y][x] + 1)
+solution.c:	  map->solution[y][x - 1] = map->solution[y][x] + 1;
+solution.c:      if (x < (map->solution[y][0] - 1) && map->solution[y][x + 1] == - 1
+solution.c:	  || map->solution[y][x + 1] > map->solution[y][x] + 1)
+solution.c:	  map->solution[y][x + 1] = map->solution[y][x] + 1;
+solution.c:      while (y < map->row)
+solution.c:	  while (x <= map->map[y][0])
+solution.c:  while (y < map->row)
+solution.c:      while (x <= map->map[y][0])
+solution.c:  if (!(result = malloc(sizeof(int*) * map->row)))
+solution.c:  while (y < map->row)
+solution.c:      if (!(result[y] = malloc(sizeof(int) * (map->map[y][0] + 1))))
+solution.c:      while (x <= map->map[y][0])
+solution.c:	  result[y][x] = map->map[y][x];

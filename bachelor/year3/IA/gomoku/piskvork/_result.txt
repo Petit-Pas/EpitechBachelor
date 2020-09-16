@@ -1,0 +1,20 @@
+-------------------------------------
+24-Oct-18  11:34 - 11:36
+Time for turn: 5 s,   Time for match: 180 s
+Tolerance: 1 s,   Memory: 80 MB
+Openings: No
+Rule: five or more stones wins
+Opening CRC: 837bb15f
+Games played: 6  (60%)
+-------------------------------------
+
+pela
+wins: 6=3+3,   losses: 0=0+0
+time/turn: 829 ms (max: 5.0 s),  time/game: 10 s
+moves/game: 13,  CRC: e0fe74ed,   memory: 3.62 MB
+
+jambon-beurre
+wins: 0=0+0,   losses: 6=3+3
+time/turn: 638 ms (max: 3.1 s),  time/game: 8 s
+moves/game: 12,  CRC: 7fde278f,   memory: 5.10 MB
+

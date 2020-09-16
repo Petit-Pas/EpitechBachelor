@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import sys
+from random import randint
+from subprocess import Popen, PIPE
+import argparse
+from time import sleep
+
+
+def percentage(x):
+    x = int(x)
+    if not 0 <= x <= 100:
+        raise argparse.ArgumentTypeError("A percentage must be between 0 and 100")
+    return x
+
+
+def client(x):
+    x = int(x)
+    if x < 0:
+        raise argparse.ArgumentTypeError("A percentage must be greater 0")
+    return x
+
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('ip', type=str, help='IP Address of the server')
+    parser.add_argument('port', type=str, help='Port of the server')
+    parser.add_argument('team', type=str, help='Team name')
+    parser.add_argument('client', type=int, help='Number of client')
+    parser.add_argument('--forward', type=percentage, help='Change the percentage of Forward', default=0)
+    parser.add_argument('--right', type=percentage, help='Change the percentage of Right', default=0)
+    parser.add_argument('--left', type=percentage, help='Change the percentage of Left', default=0)
+    parser.add_argument('--look', type=percentage, help='Change the percentage of Look', default=0)
+    parser.add_argument('--inventory', type=percentage, help='Change the percentage of Inventory', default=0)
+    parser.add_argument('--broadcast', type=percentage, help='Change the percentage of Broadcast', default=0)
+    parser.add_argument('--sbroadcast', type=percentage, help='Change the percentage of small Broadcast', default=0)
+    parser.add_argument('--lbroadcast', type=percentage, help='Change the percentage of long Broadcast', default=0)
+    parser.add_argument('--tlbroadcast', type=percentage, help='Change the percentage of too long Broadcast', default=0)
+    parser.add_argument('--connect_nbr', type=percentage, help='Change the percentage of Connect_nbr', default=0)
+    parser.add_argument('--fork', type=percentage, help='Change the percentage of Fork', default=0)
+    parser.add_argument('--eject', type=percentage, help='Change the percentage of Eject', default=0)
+    parser.add_argument('--take', type=percentage, help='Change the percentage of Take', default=0)
+    parser.add_argument('--set', type=percentage, help='Change the percentage of Set', default=0)
+    parser.add_argument('--incantation', type=percentage, help='Change the percentage of Incantation', default=0)
+    parser.add_argument('--custom', type=str, help='Run only that custom command', default="")
+    args = parser.parse_args()
+    if args.forward + args.right + args.left + args.look + args.inventory + args.broadcast + args.sbroadcast + \
+            args.lbroadcast + args.tlbroadcast + args.connect_nbr + args.fork + args.eject + args.eject + \
+            args.take + args.set + args.incantation > 100:
+        raise ValueError("The sum of all percentage must not be greater than 100%")
+    if len(
+            args.custom) != 0 and args.forward + args.right + args.left + args.look + args.inventory + args.broadcast \
+            + args.sbroadcast + args.lbroadcast + args.tlbroadcast + args.connect_nbr + args.fork + \
+            args.eject + args.eject + args.take + args.set + args.incantation != 0:
+        raise ValueError("The custom command cannot be used with another flag")
+    return args
+
+
+def launch_client(args):
+    i = 0
+    FNULL = open(os.devnull, 'w')
+    print(args.client)
+    while i != args.client:
+        p = Popen(['nc', args.ip, args.port], stdin=PIPE, stdout=FNULL, universal_newlines=True, bufsize=1)
+        print("%s" % args.team, file=p.stdin, flush=True)
+        for y in range(0, 1000):
+            remaining_percentage = 100
+            if randint(0, 100) >= args.forward != 0:
+                print("Forward\n\n", flush=True, file=p.stdin)
+                remaining_percentage -= args.forward
+            if randint(0, 100) <= args.left != 0:
+                print("Left", flush=True, file=p.stdin)
+                remaining_percentage -= args.left
+            if randint(0, 100) <= args.right != 0:
+                print("Right", flush=True, file=p.stdin)
+                remaining_percentage -= args.right
+            if randint(0, 100) <= args.look != 0:
+                print("Look", flush=True, file=p.stdin)
+                remaining_percentage -= args.look
+            if randint(0, 100) <= args.inventory != 0:
+                print("Inventory", flush=True, file=p.stdin)
+                remaining_percentage -= args.inventory
+            if randint(0, 100) <= args.broadcast != 0:
+                print("Broadcast Je broadcast", flush=True, file=p.stdin)
+                remaining_percentage -= args.broadcast
+            if randint(0, 100) <= args.connect_nbr != 0:
+                print("Connect_nbr", flush=True, file=p.stdin)
+                remaining_percentage -= args.connect_nbr
+            if randint(0, 100) <= args.fork != 0:
+                print("Fork", flush=True, file=p.stdin)
+                remaining_percentage -= args.fork
+            if randint(0, 100) <= args.eject != 0:
+                print("Eject", flush=True, file=p.stdin)
+                remaining_percentage -= args.eject
+            if randint(0, 100) <= args.take != 0:
+                print("Take food", flush=True, file=p.stdin)
+                remaining_percentage -= args.take
+            if randint(0, 100) <= args.set != 0:
+                print("Set linemate", flush=True, file=p.stdin)
+                remaining_percentage -= args.set
+            if randint(0, 100) <= args.incantation != 0:
+                print("Incantation", flush=True, file=p.stdin)
+                remaining_percentage -= args.incantation
+            if randint(0, 100) <= args.sbroadcast != 0:
+                print("Broadcast ", flush=True, file=p.stdin)
+            remaining_percentage -= args.sbroadcast
+            if randint(0, 100) <= args.lbroadcast != 0:
+                print("Broadcast Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean "
+                      "commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis"
+                      " parturient montes, nascetur ridiculus mus.",
+                      flush=True, file=p.stdin)
+                remaining_percentage -= args.lbroadcast
+            if randint(0, 100) <= args.tlbroadcast != 0:
+                print("Broadcast Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean "
+                      "commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis"
+                      " parturient montes, nascetur ridiculus mus. parturient montes, nascetur ridiculus mus. "
+                      "parturient montes, nascetur ridiculus mus.",
+                      flush=True, file=p.stdin)
+                remaining_percentage -= args.tlbroadcast
+            if len(args.custom) != 0:
+                print("%s\n" % args.custom.replace('\\n', '\n'), file=p.stdin, flush=True)
+        i += 1
+
+
+def main():
+    args = 0
+    try:
+        args = get_args()
+    except ValueError as e:
+        print(e)
+        exit(1)
+    launch_client(args)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,13 @@
+# Blender MTL File: 'Minecraft_Item_Rig.blend'
+# Material Count: 1
+
+newmtl Items-reflective.001
+Ns 96.078431
+Ka 0.050000 0.050000 0.050000
+Kd 0.500000 0.500000 0.500000
+Ks 0.585714 0.585714 0.585714
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+map_Kd ./items.png

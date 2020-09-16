@@ -1,0 +1,14 @@
+# Blender MTL File: 'Minecraft_Blocks_Rig.blend'
+# Material Count: 1
+
+newmtl Fire.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640009 0.120544 0.002580
+Ks 0.000000 0.000000 0.000000
+Ke 2.400035 0.452041 0.009676
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd ./Fire/fire_0001.png
+map_d ./Fire/fire_0001.png

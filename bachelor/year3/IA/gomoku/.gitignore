@@ -1,0 +1,7 @@
+*.o
+.idea/
+build/
+cmake-build-debug/
+*~
+venv/
+bin/

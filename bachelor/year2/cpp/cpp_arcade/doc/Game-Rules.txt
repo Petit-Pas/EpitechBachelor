@@ -1,0 +1,19 @@
+Snake:
+Normal apples eaten grants 100 points and makes you grow.
+Bonus apples disappear fast after appearing, they grant you 300 points and you don't even grow.
+The game is over if you hit a wall or if you hit yourself.
+Don't hesitate to press SPACENAR before playing, as it triggers user-friendly controls.
+
+
+Qix:
+The game is over when you have eaten at least 75 % of the map by closing areas with the trail that follows your path.
+You can only walk on the border between the empy and the eaten area.
+Sparks walk on border, if you hit one of them, the game is over.
+More Sparks spawns as you go foward into the game.
+If you stop moving while walking in the celtral area, a special spark will spawn on your trail and start going toward you, if you are hit by this special spark or if you or your trail is hit while walking in the central area, you lose 1 of your 3 lives.
+
+
+Solar Fox (bonus game):
+The game is over if you achieve to destroy every coin.
+Shoot on the coins to destroy them.
+The game is over when you have collected every coin or if you get hit by one of the ennemy's shot.

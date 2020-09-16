@@ -1,0 +1,1162 @@
+BY="Martin Januario et Sahel Lucas--Saoudi"
+AT="Lille"
+VERSION="1.0.0"
+
+[1]
+NAME="Testing with /usr/bin PATH"
+SETUP="export TERM=xterm ; PATH='/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+[1-END]
+
+[2]
+NAME="Testing with /bin PATH"
+SETUP="export TERM=xterm ; PATH='/bin'"
+CLEAN=""
+TESTS=
+  echo 'pwd'
+[2-END]
+
+[3]
+NAME="run commands"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'cat /etc/resolv.conf'
+  sleep 0.5
+  echo 'ls -l /bin'
+  sleep 0.5
+  echo 'pwd'
+[3-END]
+
+[4]
+NAME="setenv and unsetenv"
+SETUP="/usr/bin/env > .lstenv ; while read varenv ; do unset $varenv ; done < <(/bin/cat .lstenv | /usr/bin/cut -f1 -d=) ; export PATH=/bin:/usr/bin ; export _=ls ; export LS_COLORS=RID ; export MYBG=4 ; export LVL=4 ; export NOTE=2"
+CLEAN="while read varenv ; do export "$varenv" 2>/dev/null ; done  < <(/bin/cat .lstenv) ; /bin/rm -f .lstenv"
+TESTS=
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv PWD'
+  echo 'unsetenv LOGNAME'
+  echo 'unsetenv USER'
+  echo 'unsetenv GROUP'
+  echo 'unsetenv HOST'
+  echo 'unsetenv REMOTEHOST'
+  echo 'unsetenv _'
+  echo 'unsetenv LS_COLORS'
+  echo 'unsetenv NOTE'
+  echo 'setenv titi'
+  echo 'setenv tata coucou'
+  echo 'env'
+  echo '/usr/bin/env'
+  echo 'setenv var1 val1'
+  echo 'setenv var2 val2'
+[4-END]
+
+[5]
+NAME="builtin cd"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo 'cd ..'
+  echo 'ls -l'
+  echo 'cd /usr'
+  echo 'ls -l'
+[5-END]
+
+[6]
+NAME="many tab and space"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo -e "\t\t    ls\t     \t-l    \t\t  \t -a /usr   \t\t"
+[6-END]
+
+[7]
+NAME="cat < Makefile > .toto"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo "cat < Makefile > .toto"
+[7-END]
+
+[8]
+NAME="|"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo "|"
+[8-END]
+
+[9]
+NAME="Testing simple pipe"
+SETUP="export TERM=xterm ; PATH='/bin:/usr/bin'"
+CLEAN=""
+TESTS=
+  echo "ls -l /bin | grep sh"
+[9-END]
+
+[10]
+NAME="A pipe with a builtin ?"
+SETUP="export VAR1=VALEUR1 ; OLDPATH=$PATH ; PATH='/random'"
+CLEAN="PATH=$OLDPATH"
+TESTS=
+  echo 'setenv | /bin/grep VAR1'
+  echo '/bin/ls | cd /usr'
+  echo 'ls -l'
+  echo 'exit 45|cat /etc/resolv.conf'
+[10-END]
+
+[11]
+NAME="PIPE with command not found"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | cat | grep mysh'
+  echo 'fsdfsdf | ls'
+[11-END]
+
+[12]
+NAME="PIPE with grep doesn't work"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | cat | grep dfsdfsdfsdfsdf'
+[12-END]
+
+[13]
+NAME="redirection >"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls > .testlolmdr'
+  echo 'echo bite'
+  echo '/bin/grep mysh .testlolmdr >> .testlolmdr'
+  echo '/bin/grep sh .testlolmdr >> .testlolmdr'
+  echo 'cat .testlolmdr'
+  echo 'rm .testlolmdr'
+[13-END]
+
+[14]
+NAME="slut"
+SETUP="echo -e 'toto\nplop\nplip\n' > salut"
+CLEAN="rm salut"
+TESTS=
+  echo 'cat salut'
+  echo '< salut wc -l'
+  echo 'wc <salut -l'
+  echo 'grep -i LO < salut'
+  echo 'grep -i LO < salut | wc -l'
+[14-END]
+
+[15]
+NAME="cat < Makefile"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat < Makefile'
+[15-END]
+
+[16]
+NAME="<Makefile cat|> .lol wc -l "
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '< Makefile cat|>.lol wc -l'
+  echo 'cat .lol'
+  echo 'rm .lol'
+[16-END]
+
+[17]
+NAME="cat << a"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat << a'
+  echo -e 'lol\nmdr\na'
+[17-END]
+
+[18]
+NAME="cat < Makefile > .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat < Makefile > .lol'
+  echo 'cat .lol'
+  echo 'rm .lol'
+[18-END]
+
+
+[19]
+NAME="cat << <"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat << Makefile < Makefile'
+[19-END]
+
+
+[20]
+NAME="cat >> .m > .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat >> .m > .lol'
+[20-END]
+
+
+[21]
+NAME="cat << Makefile >> .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat Makefile > .lol'
+  echo 'cat << Makefile >> .lol'
+  echo 'cat .lol'
+  echo 'rm .lol'
+[21-END]
+
+
+[22]
+NAME="env > .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv HOST'
+  echo 'unsetenv _'
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv GROUP'
+  echo 'env > .lol'
+  echo 'cat .lol'
+  echo 'rm .lol'
+[22-END]
+
+[23]
+NAME="ls | cat < Makefile > .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | cat < Makefile > .lol'
+[23-END]
+
+[24]
+NAME="ls | cat -e > .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | cat -e > .lol'
+  echo 'cat .lol'
+  echo 'rm .lol'
+[24-END]
+
+[25]
+NAME="cat < Makefile | cat -e > .lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat < Makefile | cat -e > .lol'
+  echo 'cat .lol'
+  echo 'rm .lol'
+[25-END]
+
+[26]
+NAME="ls -Rl / | head (broken pipe hiden)"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls -Rl / | head'
+[26-END]
+
+[27]
+NAME="(OPTIONNEL) only 1 GUILLEMET"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '"'
+[27-END]
+
+[28]
+NAME="(OPTIONNEL) empty GUILLEMET"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '""'
+[28-END]
+
+[29]
+NAME="(OPTIONNEL) \"lol\""
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '"lol"'
+[29-END]
+
+[30]
+NAME="ls |"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls |'
+[30-END]
+
+[31]
+NAME="| ;"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '| ;'
+[31-END]
+
+[32]
+NAME="ls ||||| cat"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls ||||| cat'
+[32-END]
+
+[33]
+NAME="NULL"
+SETUP=""
+CLEAN=""
+TESTS=
+  cat /dev/null
+[33-END]
+
+[34]
+NAME="Empty"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo ''
+[34-END]
+
+[35]
+NAME="Simple Exec"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'id'
+[35-END]
+
+[36]
+NAME="Run simple commands"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls'
+  echo 'pwd'
+  echo 'ls -l'
+[36-END]
+
+[37]
+NAME="wrong simple command"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'Sahel est con'
+[37-END]
+
+[38]
+NAME="PATH 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '/ls'
+[38-END]
+
+[39]
+NAME="PATH 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '/usr/bin/ls'
+[39-END]
+
+[40]
+NAME="PATH 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'setenv PATH caca'
+  echo 'ls'
+[40-END]
+
+[41]
+NAME="PATH 4"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'setenv PATH /usr/bin:'
+  echo 'ls'
+[41-END]
+
+[42]
+NAME="PATH 5"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'setenv PATH /usr/bi'
+  echo 'ls'
+[42-END]
+
+[43]
+NAME="setenv and unsetenv"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'setenv ok ok ok'
+[43-END]
+
+[44]
+NAME="cd"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cd ..'
+  echo 'ls'
+[44-END]
+
+[45]
+NAME="cd error"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cd ok ok ok'
+[45-END]
+
+[46]
+NAME="cd error 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cd /root'
+[46-END]
+
+[47]
+NAME="cd -"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cd ..'
+  echo 'ls'
+  echo 'cd -'
+  echo 'ls'
+[47-END]
+
+[48]
+NAME="pipe with builtins"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'env | grep XDG'
+[48-END]
+
+[49]
+NAME="pipe"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | cat -e | grep Ma'
+[49-END]
+
+[50]
+NAME="ls >"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls >'
+[50-END]
+
+[51]
+NAME="ls >> out; ls | ls | ls | ls; ls"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls >> out; ls | ls |ls | ls ; ls'
+  echo 'rm out'
+[51-END]
+
+[52]
+NAME="cd - without OLDPWD"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'unsetenv OLDPWD'
+  echo 'cd'
+  echo 'cd -'
+  echo 'ls'
+[52-END]
+
+[53]
+NAME="ls | ;"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | ;'
+[53-END]
+
+[54]
+NAME="ls | ls > ;"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | ls > ;'
+[54-END]
+
+[55]
+NAME="ls ; ls > out"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls ; ls > out'
+  echo 'rm out'
+[55-END]
+
+[56]
+NAME=";ls > out"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo ';ls>out'
+  echo 'rm out'
+[56-END]
+
+[57]
+NAME="<< lol"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '<< lol'
+[57-END]
+
+[58]
+NAME="> out"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '> out'
+[58-END]
+
+[59]
+NAME="ls ; ; ; ; "
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls ; ; ; '
+[59-END]
+
+[60]
+NAME="ls ; ; ; | ls"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls ; ; ; | ls'
+[60-END]
+
+[61]
+NAME="ls | > z"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | > z'
+[61-END]
+
+[62]
+NAME="Creation of file with bad command : sdf > a"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'sdf > a'
+  echo 'ls'
+  echo 'rm a'
+[62-END]
+
+[63]
+NAME="cat -e << a | grep b"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat -e << a | grep b'
+  echo 'zert'
+  echo 'zea'
+  echo 'b'
+  echo 'a'
+[63-END]
+
+[64]
+NAME="space"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo ' '
+[64-END]
+
+[65]
+NAME="tab"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo -e '\t'
+[65-END]
+
+[66]
+NAME="space and tab"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo -e '\t \t   \t'
+[66-END]
+
+[67]
+NAME="Plus de 10000 character aléatoire"
+SETUP=""
+CLEAN=""
+TESTS=
+  cat .tmp
+[67-END]
+
+[68]
+NAME=";;;;"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo ';;;;'
+[68-END]
+
+[69]
+NAME="||||"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '||||'
+[69-END]
+
+[70]
+NAME="env -i"
+SETUP=""
+CLEAN=""
+TESTS=
+  env -i
+[70-END]
+
+[71]
+NAME="10000 \\n"
+SETUP=""
+CLEAN=""
+TESTS=
+  cat .tmp2
+[71-END]
+
+[72]
+NAME="id"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'id'
+[72-END]
+
+[73]
+NAME="add after file << >>"
+SETUP=""
+CLEAN="rm .toto"
+TESTS=
+  echo 'cat Makefile > .toto'
+  echo 'cat -e << a >> .toto'
+  echo 'OLALA'
+  echo 'Really' 
+  echo 'a'
+  echo 'cat .toto'
+[73-END]
+
+[74]
+NAME=" ; ; ; ; "
+SETUP=""
+CLEAN=""
+TESTS=
+  echo ' ; ; ; ; '
+[74-END]
+
+[75]
+NAME=" | | | | "
+SETUP=""
+CLEAN=""
+TESTS=
+  echo ' | | | | '
+[75-END]
+
+[76]
+NAME="\t | \t | \t | \t | \t | \t"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo -e '\t | \t | \t | \t | \t'
+[76-END]
+
+[77]
+NAME="\t ; \t ; \t ; \t ; \t ; \t"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo -e '\t ; \t ; \t ; \t ; \t'
+[77-END]
+
+[78]
+NAME="ls | cat -e < Makefile"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls | cat -e < Makefile'
+[78-END]
+
+[79]
+NAME="setenv"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv HOST'
+  echo 'unsetenv _'
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv GROUP'  
+  echo 'setenv'
+[79-END]
+
+[80]
+NAME="multiple setenv"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'unsetenv SHLVL'
+  echo 'unsetenv HOST'
+  echo 'unsetenv _'
+  echo 'unsetenv HOSTTYPE'
+  echo 'unsetenv VENDOR'
+  echo 'unsetenv OSTYPE'
+  echo 'unsetenv MACHTYPE'
+  echo 'unsetenv GROUP'
+  echo 'setenv PATH'
+  echo 'setenv PATH lol'
+  echo 'setenv PATH caca'
+  echo 'setenv PATH ls'
+  echo 'setenv'
+  echo 'ls'
+[80-END]
+
+[81]
+NAME="./mysh inner ./mysh"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo './mysh'
+  echo 'ls'
+  cat /dev/null
+  echo 'ls'
+[81-END]
+
+[82]
+NAME="bad command"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'sdf sdf sdf'
+[82-END]
+
+[83]
+NAME="cat Makefile > .."
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat Makefile > ..'
+[83-END]
+
+[84]
+NAME="file not found"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'rm -rf .sdfsdf'
+  echo 'cat < .sdfsdf'
+[84-END]
+
+[85]
+NAME="grep"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat Makefile | grep b | grep i'
+[85-END]
+
+[86]
+NAME="setenv ="
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'setenv ='
+[86-END]
+
+[87]
+NAME="setenv az%9"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'setenv ae%9'
+[87-END]
+
+[88]
+NAME="./Makefile"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo './Makefile'
+[88-END]
+
+[89]
+NAME="./include"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo './include'
+[89-END]
+
+[90]
+NAME="enve"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'enve'
+[90-END]
+
+[91]
+NAME="cdenve -"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cdenve -'
+[91-END]
+
+[92]
+NAME="		 ls			 "
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '			 ls		'
+[92-END]
+
+[93]
+NAME="/ls"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '/ls'
+[93-END]
+
+[94]
+NAME="cat -e < olala | grep b"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cat -e < olala | grep b'
+[94-END]
+
+[95]
+NAME="cd .. | ls"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'cd .. | ls'
+[95-END]
+
+[96]
+NAME="env | grep PATH"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'env | grep PATH'
+[96-END]
+
+[97]
+NAME="< zert cat"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '< zert cat'
+[97-END]
+
+[98]
+NAME="< Makefile cat -e"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '< Makefile cat -e'
+[98-END]
+
+[99]
+NAME="< Makefile cat >> .lol -e"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '< Makefile cat >> .lol -e'
+[99-END]
+
+[100]
+NAME="THE END | GG"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'THE END | GG'
+[100-END]
+
+[101]
+NAME="42sh"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo '42sh'
+  echo 'ls'
+[101-END]
+
+[102]
+NAME="env -i et ls"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'ls'
+  env -i
+[102-END]
+
+[103]
+NAME="WHERE 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where ls'
+[103-END]
+
+[104]
+NAME="WHERE 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where ls grep ls'
+[104-END]
+
+[105]
+NAME="WHERE 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where sdf ls grep sdf'
+[105-END]
+
+[106]
+NAME="WHERE 4"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'where sdf'
+[106-END]
+
+[107]
+NAME="ALIAS 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'alias ls ls -l'
+  echo 'ls'
+[107-END]
+
+[108]
+NAME="ALIAS 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'alias a ls'
+  echo 'a'
+[108-END]
+
+[109]
+NAME="ALIAS 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'alias ls ll'
+  echo 'ls'
+[109-END]
+
+[110]
+NAME="REPEAT 1"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'repeat 4 ls'
+[110-END]
+
+[111]
+NAME="REPEAT 2"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'repeat 4e ls'
+[111-END]
+
+[112]
+NAME="REPEAT 3"
+SETUP=""
+CLEAN=""
+TESTS=
+  echo 'repeat 2 sdf'
+[112-END]
+
+[113]
+NAME="WHICH 1"
+TESTS=
+  echo 'which ls'
+[113-END]
+
+[114]
+NAME="WHICH 2"
+TESTS=
+  echo 'alias ll ls -l'
+  echo 'which ll'
+[114-END]
+
+[115]
+NAME="WHICH 3"
+TESTS=
+  echo 'setenv PATH'
+  echo 'which ls'
+[115-END]
+
+[116]
+NAME="WHICH 4"
+TESTS=
+  echo 'unsetenv PATH'
+  echo 'which ls'
+[116-END]
+
+[117]
+NAME="WHERE 1"
+TESTS=
+  echo 'where ls'
+[117-END]
+
+[118]
+NAME="WHERE 2"
+TESTS=
+  echo 'alias ll ls -l'
+  echo 'where ll'
+[118-END]
+
+[119]
+NAME="WHERE 3"
+TESTS=
+  echo 'setenv PATH'
+  echo 'where ls'
+[119-END]
+
+[120]
+NAME="WHERE 4"
+TESTS=
+  echo 'unsetenv PATH'
+  echo 'where ls'
+[120-END]
+
+[121]
+NAME="SOURCE"
+SETUP="echo 'alias ls ls -l' > .lol"
+CLEAN="rm .lol"
+TESTS=
+  echo 'source .lol'
+  echo 'ls'
+[121-END]
+
+[122]
+NAME="ECHO 1"
+TESTS=
+  echo 'echo alias ls ls -l'
+  echo 'echo $?'
+[122-END]
+
+[123]
+NAME="EXIT"
+TESTS=
+  echo 'exit'
+[123-END]
+
+[124]
+NAME="EXIT NOT_A_NUMBER"
+TESTS=
+  echo 'exit banana'
+[124-END]
+
+[125]
+NAME="EXIT NORMAL"
+TESTS=
+  echo 'exit 123'
+[125-END]
+
+[126]
+NAME="EXIT TOO_MUCH_ARGUMENTS"
+TESTS=
+  echo 'exit I love banana'
+[126-END]
+
+[127]
+NAME="EXIT BAD_FORMAT"
+TESTS=
+  echo 'exit 345678RTYU'
+[127-END]
+
+[128]
+NAME="EXIT NEGATIVE"
+TESTS=
+  echo 'exit -12'
+[128-END]
+
+[129]
+NAME="REPEAT 0"
+TESTS=
+  echo 'repeat'
+[129-END]
+
+[130]
+NAME="WHERE built-in"
+TESTS=
+  echo 'where cd'
+[130-END]
+
+[131]
+NAME="where /usr/bin/ls"
+TESTS=
+  echo 'where /usr/bin/ls'
+[131-END]
+
+[132]
+NAME="where /usr/bin/ls"
+TESTS=
+  echo 'where /usr/bin/ls ls'
+[132-END]
+
+[133]
+NAME="Advanced pipe roken pipe no end"
+TESTS=
+  echo 'ls -R / | grp '
+[133-END]
+
+[134]
+NAME="Advanced redirection directory > /bin"
+TESTS=
+  echo 'ls -Rl / > /bin'
+[134-END]
